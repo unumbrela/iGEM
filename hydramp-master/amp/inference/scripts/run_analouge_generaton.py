@@ -1,3 +1,6 @@
+# python -m amp.inference.scripts.run_analouge_generaton -s GIGKFLKKAKKFGKAFVKILKK FLPLIGRVFSGIL -f improvement -n 100
+# python -m amp.inference.scripts.run_analouge_generaton --model_path './downloaded_data_zips/models/HydrAMP/37' --decomposer_path ./downloaded_data_zips/models/HydrAMP/pca_decomposer.joblib --filtering-criteria improvement --temperature 1 --sequences 'LLGDFFRKSKEKIGKEFKRIVQRIKDFLRNLVPRTES'
+
 import argparse
 import pprint
 

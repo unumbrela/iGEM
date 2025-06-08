@@ -1,6 +1,3 @@
-import sys
-sys.path.append("/TG-CDDPM-main")
-
 import argparse
 import torch.cuda
 from transformers import AutoTokenizer
@@ -21,7 +18,7 @@ from utils.train_util import TrainLoop
 def main():
     args = create_argparser().parse_args()
     device = ('cuda' if torch.cuda.is_available() else 'cpu')
-    print("creating model and diffusion...")
+    print("creating model and diffusion..")
 
     # diffusion model building
     model, diffusion = create_model_and_diffusion(
@@ -54,12 +51,12 @@ def main():
     # facilitator.load_state_dict(torch.load(args.checkpoint_dir + "/diffusion_model_facilitator.pt"))
     # facilitator.to(device)
 
-    print("creating data loader...")
+    print("creating data loader..")
     # myTokenizer = tokenizer(args.vocab_path)
-    myTokenizer = AutoTokenizer.from_pretrained('../checkpoints/bert/prot_bert')
+    myTokenizer = AutoTokenizer.from_pretrained('./checkpoints/bert/prot_bert')
     data = load_data(myTokenizer, args.seq_len, "train", args)
 
-    print("training...")
+    print("training..")
     TrainLoop(
         model=model,
         translator=translator,
@@ -85,15 +82,15 @@ def main():
 def create_argparser():
     defaults = dict(
         # path of dataset
-        data_dir="../dataset",
-        val_data_dir="../dataset",
-        vocab_path='../mapping/vocab.txt',
+        data_dir="./dataset",
+        val_data_dir="./dataset",
+        vocab_path='./mapping/vocab.txt',
         # path of pretrained model
-        checkpoint_dir='../checkpoints',
-        pretrained_diffusion='../checkpoints/diffusion_model_pre_trained.pt',
-        pretrained_text_encoder='../checkpoints/text_encoder_4.pt',
-        pretrained_pep_encoder='../checkpoints/pep_encoder_4.pt',
-        pretrained_translator='../checkpoints/diffusion_model_facilitator.pt',
+        checkpoint_dir='./checkpoints',
+        pretrained_diffusion='./checkpoints/diffusion_model_pre_trained.pt',
+        pretrained_text_encoder='./checkpoints/text_encoder_4.pt',
+        pretrained_pep_encoder='./checkpoints/pep_encoder_4.pt',
+        pretrained_translator='./checkpoints/diffusion_model_facilitator.pt',
         timesteps=500,
         train_epoches=1000,
         lr=5e-4,
