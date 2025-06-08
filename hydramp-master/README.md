@@ -57,6 +57,12 @@ python -m amp.inference.scripts.run_analouge_generation \
     --sequences 'LLGDFFRKSKEKIGKEFKRIVQRIKDFLRNLVPRTES'
 ```
 
+结果展示
+
+
+
+![image-20250608121020764](./image-20250608121020764.png)
+
 ### **2.2 无约束生成 (Unconstrained Generation)**
 
 此模式用于从头生成全新的抗菌肽序列。其运行方式与类似物生成相似，请参考 `run_analouge_generation` 脚本的参数，并对 `run_unconstrained_generation` 脚本进行相应修改。
