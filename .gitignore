@@ -49,3 +49,7 @@ output/
 *.Identifier
 
 downloaded_data_zips/
+
+AMP_1st/
+AMP_2nd/
+AMP_2nd_threashold/
