@@ -1,5 +1,3 @@
-import sys
-sys.path.append("/TG-CDDPM-main")
 import argparse
 import os
 import jsonlines
@@ -20,10 +18,10 @@ from utils.script_utils import (
 class PretainedTokenizer():
     def __init__(self):
         super().__init__()
-        self.tokenizer = AutoTokenizer.from_pretrained('../checkpoints/bert/prot_bert')
+        self.tokenizer = AutoTokenizer.from_pretrained('./checkpoints/bert/prot_bert')
         self.vocab = {}
         self.rev_vocab = {}
-        with open('../checkpoints/bert/prot_bert/vocab.txt', 'r') as file:
+        with open('./checkpoints/bert/prot_bert/vocab.txt', 'r') as file:
             for word in file:
                 self.vocab[word.split()[0]] = len(self.vocab)
                 self.rev_vocab[len(self.vocab) - 1] = word.split()[0]
@@ -65,7 +63,7 @@ class PretainedTokenizer():
 def main():
     args = create_argparser().parse_args()
     device = ('cuda' if th.cuda.is_available() else 'cpu')
-    print("creating model and diffusion...")
+    print("creating model and diffusion..")
     # myTokenizer = tokenizer(args.vocab_path)
     myTokenizer = PretainedTokenizer()
     model, diffusion = create_model_and_diffusion(
@@ -112,7 +110,7 @@ def main():
 
     translator = FacModel(config).to(device)
     translator.load_state_dict(torch.load(args.translator_path))
-    # pep_tokenizer = PepTokenizer('../mapping/vocab.txt')
+    # pep_tokenizer = PepTokenizer('./mapping/vocab.txt')
 
     def cond_fn(inputs_embeds, timesteps, reference=None):
         assert reference is not None
@@ -132,12 +130,12 @@ def main():
 
         return model(inputs_embeds=inputs_embeds, timesteps=timesteps, self_condition=reference[0])
 
-    print("sampling...")
+    print("sampling..")
     acc = []
     for length in args.seq_len:
         all_peptides = []
         # ref_data = load_data(myTokenizer, length, 'train', args.cls, args.batch_size)
-        # ref_text, ref_pep = get_text_peptides('../dataset/backup/ensemble_test.csv')
+        # ref_text, ref_pep = get_text_peptides('./dataset/backup/ensemble_test.csv')
         # text_tokens = text_tokenizer.batch_encode(ref_text)
         # pep_tokens = pep_tokenizer.batch_encode(ref_pep)
 
@@ -213,13 +211,13 @@ def create_argparser():
         batch_size=20,
         max_loop=50,
         use_ddim=False,
-        sample_path="../sample/",
-        vocab_path="../mapping/vocab.txt",
-        prior_path="../checkpoints/w_pretraining_w_inference.pt",
-        model_path="../checkpoints/w_pretraining_w_inference.pt",
-        pep_encoder_path="../checkpoints/pep_encoder.pt",
-        text_encoder_path="../checkpoints/text_encoder.pt",
-        translator_path="../checkpoints/translator.pt",
+        sample_path="./sample/",
+        vocab_path="./mapping/vocab.txt",
+        prior_path="./checkpoints/w_pretraining_w_inference.pt",
+        model_path="./checkpoints/w_pretraining_w_inference.pt",
+        pep_encoder_path="./checkpoints/pep_encoder.pt",
+        text_encoder_path="./checkpoints/text_encoder.pt",
+        translator_path="./checkpoints/translator.pt",
         classifier_scale=1.0,
         embedding_scale=0.0,
         use_fp16=False,

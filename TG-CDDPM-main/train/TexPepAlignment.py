@@ -1,5 +1,4 @@
-# import sys
-# sys.path.append("..")
+# python -m train.TexPepAlignment
 import argparse
 import torch
 import torch.nn as nn
@@ -23,9 +22,9 @@ warnings.filterwarnings('ignore')
 
 def create_argparser():
     defaults = dict(
-        batch_size=32,
-        clip_epoches=50,
-        fac_epoches=10,
+        batch_size=64,
+        clip_epoches=1,
+        fac_epoches=1,
         lr=1e-4,
         weight_decay=0.999,
         valid_rate=0.2,
@@ -213,7 +212,7 @@ if __name__ == '__main__':
 
     train_dataloader = DataLoader(dataset,
                                   shuffle=True,
-                                  num_workers=0,
+                                  num_workers=16,
                                   batch_size=args.batch_size,
                                   drop_last=True, )
     # valid
@@ -230,7 +229,7 @@ if __name__ == '__main__':
     valid_dataset = BatchDataset(valid)
     valid_dataloader = DataLoader(valid_dataset,
                                   shuffle=True,
-                                  num_workers=0,
+                                  num_workers=16,
                                   batch_size=args.batch_size,
                                   drop_last=True, )
     infonce = InfoNCE()
